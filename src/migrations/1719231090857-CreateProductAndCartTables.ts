@@ -1,9 +1,7 @@
-import { MigrationInterface, QueryRunner } from 'typeorm';
+const { MigrationInterface, QueryRunner } = require('typeorm');
 
-export class CreateProductAndCartTables1651234567890
-  implements MigrationInterface
-{
-  public async up(queryRunner: QueryRunner): Promise<void> {
+class CreateProductAndCartTables1719231090857 {
+  async up(queryRunner) {
     await queryRunner.query(`
       CREATE TABLE product (
         id SERIAL PRIMARY KEY,
@@ -32,8 +30,10 @@ export class CreateProductAndCartTables1651234567890
     `);
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {
+  async down(queryRunner) {
     await queryRunner.query(`DROP TABLE cart_item;`);
     await queryRunner.query(`DROP TABLE product;`);
   }
 }
+
+module.exports = CreateProductAndCartTables1719231090857;
