@@ -1,5 +1,5 @@
-import { DataSource } from 'typeorm';
-import * as dotenv from 'dotenv';
+const { DataSource } = require('typeorm');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
