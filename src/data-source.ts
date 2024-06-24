@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-export const AppDataSource = new DataSource({
+exports.AppDataSource = new DataSource({
   type: 'postgres',
   host: process.env.DB_HOST,
   port: +process.env.DB_PORT,
