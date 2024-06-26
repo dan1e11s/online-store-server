@@ -1,6 +1,6 @@
 const { MigrationInterface, QueryRunner } = require('typeorm');
 
-class CreateProductAndCartTables1719231090857 {
+class UpdateProductAndCartTables1719251630601 {
   async up(queryRunner) {
     await queryRunner.query(`
       CREATE TABLE product (
@@ -10,28 +10,25 @@ class CreateProductAndCartTables1719231090857 {
         images TEXT[],
         price DECIMAL NOT NULL,
         category VARCHAR NOT NULL,
-        createdAt TIMESTAMP DEFAULT NOW(),
-        updatedAt TIMESTAMP DEFAULT NOW()
+        createdat TIMESTAMP DEFAULT NOW(),
+        updatedat TIMESTAMP DEFAULT NOW()
       );
     `);
 
     await queryRunner.query(`
-      CREATE TABLE cart_item (
+        CREATE TABLE cart (
         id SERIAL PRIMARY KEY,
-        product_id INT NOT NULL,
+        "productId" INT NOT NULL,
         quantity INT NOT NULL,
-        CONSTRAINT fk_product
-          FOREIGN KEY(product_id) 
-          REFERENCES product(id)
-          ON DELETE CASCADE
+        CONSTRAINT fk_product FOREIGN KEY ("productId") REFERENCES product(id) ON DELETE CASCADE
       );
     `);
   }
 
   async down(queryRunner) {
-    await queryRunner.query(`DROP TABLE cart_item;`);
+    await queryRunner.query(`DROP TABLE cart;`);
     await queryRunner.query(`DROP TABLE product;`);
   }
 }
 
-module.exports = CreateProductAndCartTables1719231090857;
+module.exports = UpdateProductAndCartTables1719251630601;

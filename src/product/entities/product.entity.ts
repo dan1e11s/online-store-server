@@ -27,8 +27,8 @@ export class Product {
   category: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdat: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedat: Date;
 }

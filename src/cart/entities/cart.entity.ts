@@ -1,5 +1,5 @@
 import { Product } from 'src/product/entities/product.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, JoinColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Cart {
@@ -7,6 +7,7 @@ export class Cart {
   id: number;
 
   @ManyToOne(() => Product)
+  @JoinColumn({ name: 'productId' })
   product: Product;
 
   @Column()

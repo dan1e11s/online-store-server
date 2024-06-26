@@ -26,7 +26,7 @@ export class ProductService {
   async findAll() {
     return await this.productRepository.find({
       order: {
-        createdAt: 'DESC',
+        createdat: 'DESC',
       },
     });
   }
@@ -62,11 +62,10 @@ export class ProductService {
 
     return await this.productRepository.delete(id);
   }
-
   async findAllWithPagination(page: number, limit: number) {
     const products = await this.productRepository.find({
       order: {
-        createdAt: 'DESC',
+        createdat: 'DESC',
       },
       take: limit,
       skip: (page - 1) * limit,
@@ -76,11 +75,12 @@ export class ProductService {
   }
 
   async findAllWithSearch(query: string) {
+    const wildcardQuery = `%${query}%`;
     return await this.productRepository.find({
       where: [
-        { title: ILike(`%${query}`) },
-        { description: ILike(`%${query}`) },
-        { category: ILike(`%${query}`) },
+        { title: ILike(wildcardQuery) },
+        { description: ILike(wildcardQuery) },
+        { category: ILike(wildcardQuery) },
       ],
     });
   }
