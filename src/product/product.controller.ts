@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   Query,
-  BadRequestException,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -23,28 +22,9 @@ export class ProductController {
   }
 
   @Get()
-  async findAll(
-    @Query('q') query?: string,
-    @Query('page') page?: string,
-    @Query('limit') limit?: string,
-  ) {
+  async findAll(@Query('q') query?: string) {
     if (query) {
       return this.productService.findAllWithSearch(query);
-    } else if (page !== undefined && limit !== undefined) {
-      const pageNum = parseInt(page, 10);
-      const limitNum = parseInt(limit, 10);
-
-      if (isNaN(pageNum) || isNaN(limitNum)) {
-        throw new BadRequestException(
-          'Both page and limit must be valid numbers for pagination',
-        );
-      }
-
-      return this.productService.findAllWithPagination(pageNum, limitNum);
-    } else if (page !== undefined || limit !== undefined) {
-      throw new BadRequestException(
-        'Both page and limit must be provided for pagination',
-      );
     } else {
       return this.productService.findAll();
     }

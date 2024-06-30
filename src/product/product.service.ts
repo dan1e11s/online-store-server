@@ -17,18 +17,19 @@ export class ProductService {
       title: createProductDto.title,
       description: createProductDto.description,
       images: createProductDto.images,
-      price: +createProductDto.price,
+      price: Number(createProductDto.price),
       category: createProductDto.category,
+      sale: Number(createProductDto.sale),
+      size: createProductDto.size,
+      color: createProductDto.color,
+      isNew: createProductDto.isNew,
     };
+
     return await this.productRepository.save(newProduct);
   }
 
   async findAll() {
-    return await this.productRepository.find({
-      order: {
-        createdat: 'DESC',
-      },
-    });
+    return await this.productRepository.find();
   }
 
   async findOne(id: number) {
@@ -61,17 +62,6 @@ export class ProductService {
     if (!product) throw new NotFoundException('Item not found!');
 
     return await this.productRepository.delete(id);
-  }
-  async findAllWithPagination(page: number, limit: number) {
-    const products = await this.productRepository.find({
-      order: {
-        createdat: 'DESC',
-      },
-      take: limit,
-      skip: (page - 1) * limit,
-    });
-
-    return products;
   }
 
   async findAllWithSearch(query: string) {

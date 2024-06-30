@@ -15,4 +15,16 @@ export class CreateProductDto {
 
   @IsNotEmpty()
   category: string;
+
+  @IsNotEmpty()
+  sale: number;
+
+  @IsNotEmpty()
+  size: string;
+
+  @IsNotEmpty()
+  color: string;
+
+  @IsNotEmpty()
+  isNew: boolean;
 }

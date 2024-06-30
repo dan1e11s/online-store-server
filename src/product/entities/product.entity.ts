@@ -1,3 +1,4 @@
+import { IsOptional } from 'class-validator';
 import {
   Entity,
   Column,
@@ -25,6 +26,18 @@ export class Product {
 
   @Column()
   category: string;
+
+  @Column('decimal')
+  sale: number;
+
+  @Column()
+  size: string;
+
+  @Column()
+  color: string;
+
+  @Column()
+  isNew: boolean;
 
   @CreateDateColumn()
   createdat: Date;
