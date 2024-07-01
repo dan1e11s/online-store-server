@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductModule } from './product/product.module';
 import { CartModule } from './cart/cart.module';
+import { TokenCheckMiddleware } from './middleware/token-check.middleware';
 
 @Module({
   imports: [
@@ -18,10 +19,8 @@ import { CartModule } from './cart/cart.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        // migrations: ['src/migrations/*.ts'],
         synchronize: false,
         autoLoadEntities: true,
-        // entities: [__dirname + '/**/*.entity{.js, .ts}'],
       }),
       inject: [ConfigService],
     }),
@@ -31,4 +30,8 @@ import { CartModule } from './cart/cart.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(TokenCheckMiddleware).forRoutes('product', 'cart');
+  }
+}
